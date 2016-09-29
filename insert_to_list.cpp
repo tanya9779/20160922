@@ -49,6 +49,7 @@ void insert(List * list, int index, Node * n) // вставка нового э�
         i++;
     }
     if (current) { // вставляем новый элемент перед current, разрывая список
+        current->prev->next = temp; 
         temp->prev = current->prev;
         current->prev = temp;
         temp->next = current;
