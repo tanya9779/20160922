@@ -46,34 +46,41 @@ void print( List * list )
         }
         cout<<"\n";
 }
-int find_first( List * list, Node * n) // поиск первого совпадения - возвращает индекс или -1
+int find_last( List * list, Node * n) // поиск последнего совпадения - возвращает индекс или -1
 {
         int i=0;
+        int last_find = -1;
         Node * temp = list->head;  // Временно указываем на адрес первого элемента
         while( temp != NULL )      // Пока не встретим пустое значение
         {
                if (temp->x == n->x && temp->y == n->y) {
-                           return i;
+                           last_find = i;
                }            
                i++;
                temp = temp->next;
         }
-        return -1;
+        return last_find;
 }    
 
 int main()
 {
     List * my_list = new List;
     Node * nodes = new Node[20];
-    for (int i=0; i<20;i++) {
+    for (int i=0; i<10;i++) {  // первые 10 элементов случайный
         nodes[i].x = rand()+100;
         nodes[i].y = rand()+100;
         add(my_list, nodes[i]);
-    }    
-    print(my_list);
-    int rand_ind = rand()%20;
+    } 
+    for (int i=10;i<20;i++) {  // последние 10 элементов дублируют первые 10 элементов
+        nodes[i].x = nodes[i-10].x;
+        nodes[i].y = nodes[i-10].y;
+        add(my_list, nodes[i]);
+    }
+    print(my_list);  // выведем массив на экран
+    int rand_ind = rand()%10;  // случайный элемент выбираем
     Node * ff = &nodes[rand_ind];
-    cout << "find first (" << ff->x << "," << ff->y << ") found index " << find_first(my_list, ff) << "\n";
+    // поищем этот случайный элемент в массиве
+    cout << "find last (" << ff->x << "," << ff->y << ") found index " << find_last(my_list, ff) << "\n";
     
   // только для отладки
   //  int z;
